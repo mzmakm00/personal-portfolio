@@ -1,0 +1,1 @@
+CREATE POLICY "Anyone can submit messages" ON public.messages FOR INSERT TO anon, authenticated WITH CHECK (true);

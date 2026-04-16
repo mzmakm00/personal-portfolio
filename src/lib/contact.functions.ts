@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { supabase } from "@/integrations/supabase/client";
 import { contactSchema } from "./contact-schema";
 
 const GATEWAY_URL = "https://connector-gateway.lovable.dev/resend";
@@ -8,7 +8,7 @@ export const submitContact = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => contactSchema.parse(input))
   .handler(async ({ data }) => {
     // 1. Save to messages table
-    const { error: dbError } = await supabaseAdmin.from("messages").insert({
+    const { error: dbError } = await supabase.from("messages").insert({
       name: data.name,
       email: data.email,
       message: data.message,
