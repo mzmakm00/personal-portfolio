@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { supabase } from "@/integrations/supabase/client";
 
 export type Project = {
   id: string;
@@ -24,8 +24,8 @@ export type Experience = {
 
 export const getPortfolioData = createServerFn({ method: "GET" }).handler(async () => {
   const [projectsRes, experienceRes] = await Promise.all([
-    supabaseAdmin.from("projects").select("*").order("display_order"),
-    supabaseAdmin.from("experience").select("*").order("display_order"),
+    supabase.from("projects").select("*").order("display_order"),
+    supabase.from("experience").select("*").order("display_order"),
   ]);
 
   if (projectsRes.error) {
