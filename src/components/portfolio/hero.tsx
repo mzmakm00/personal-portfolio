@@ -23,7 +23,7 @@ export function Hero() {
       <motion.h1
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] as const }}
         className="text-balance text-center text-5xl font-bold leading-[1.05] tracking-tight md:text-7xl lg:text-8xl"
       >
         <span className="text-gradient">Full-stack engineer</span>
