@@ -14,7 +14,99 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      experience: {
+        Row: {
+          company: string
+          created_at: string
+          description: string
+          display_order: number
+          id: string
+          period: string
+          role: string
+        }
+        Insert: {
+          company: string
+          created_at?: string
+          description: string
+          display_order?: number
+          id?: string
+          period: string
+          role: string
+        }
+        Update: {
+          company?: string
+          created_at?: string
+          description?: string
+          display_order?: number
+          id?: string
+          period?: string
+          role?: string
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          created_at: string
+          demo_url: string | null
+          description: string
+          display_order: number
+          featured: boolean
+          github_url: string | null
+          id: string
+          image_url: string | null
+          tags: string[]
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          demo_url?: string | null
+          description: string
+          display_order?: number
+          featured?: boolean
+          github_url?: string | null
+          id?: string
+          image_url?: string | null
+          tags?: string[]
+          title: string
+        }
+        Update: {
+          created_at?: string
+          demo_url?: string | null
+          description?: string
+          display_order?: number
+          featured?: boolean
+          github_url?: string | null
+          id?: string
+          image_url?: string | null
+          tags?: string[]
+          title?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
