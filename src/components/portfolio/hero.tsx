@@ -17,7 +17,7 @@ export function Hero() {
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
           <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
         </span>
-        <span className="font-mono text-xs text-muted-foreground">Available for new projects</span>
+        <span className="font-mono text-xs text-muted-foreground">Open to opportunities</span>
       </motion.div>
 
       <motion.h1
@@ -82,9 +82,9 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.8 }}
-        className="absolute bottom-10 inline-flex flex-col items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
+        className="absolute bottom-10 inline-flex items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+        aria-label="Scroll to work"
       >
-        Scroll
         <motion.span
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
