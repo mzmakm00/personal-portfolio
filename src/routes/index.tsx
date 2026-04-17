@@ -7,20 +7,21 @@ import { ProjectGallery } from "@/components/portfolio/project-gallery";
 import { ExperienceTimeline } from "@/components/portfolio/experience-timeline";
 import { ContactForm } from "@/components/portfolio/contact-form";
 import { FadeInUp } from "@/components/portfolio/fade-in-up";
+import { CursorGlow } from "@/components/portfolio/cursor-glow";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Full-Stack Engineer · Portfolio" },
+      { title: "Moazzam · Full-Stack Engineer building SaaS that converts" },
       {
         name: "description",
         content:
-          "Selected work, experience and contact for a full-stack engineer building resilient web systems with TypeScript, React, Go and Postgres.",
+          "Moazzam — full-stack engineer shipping conversion-focused SaaS products with TypeScript, React, Go and Postgres.",
       },
-      { property: "og:title", content: "Full-Stack Engineer · Portfolio" },
+      { property: "og:title", content: "Moazzam · Full-Stack Engineer" },
       {
         property: "og:description",
-        content: "Selected work, experience and contact for a full-stack engineer.",
+        content: "Selected work, skills and contact for a full-stack engineer building SaaS.",
       },
     ],
   }),
@@ -57,11 +58,18 @@ function Index() {
 
   return (
     <div id="top" className="relative">
+      {/* Global ambient background — visible on every section */}
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-aurora-soft" aria-hidden="true" />
+      <div className="pointer-events-none fixed inset-0 -z-10 grid-bg-page" aria-hidden="true" />
+
+      {/* Cursor-following glow */}
+      <CursorGlow />
+
       <Nav />
-      <main>
+      <main className="relative z-10">
         <Hero />
 
-        <Section id="stack" eyebrow="Tech stack" title="Tools I reach for daily">
+        <Section id="skills" eyebrow="Technologies" title="Skills I reach for daily">
           <TechStack />
         </Section>
 
@@ -83,7 +91,7 @@ function Index() {
         </Section>
 
         <footer className="border-t border-border py-10 text-center font-mono text-xs text-muted-foreground">
-          © {new Date().getFullYear()} · Crafted with care.
+          © {new Date().getFullYear()} moazzam.dev · Crafted with care.
         </footer>
       </main>
     </div>

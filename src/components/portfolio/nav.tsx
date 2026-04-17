@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const LINKS = [
   { href: "#work", label: "Work" },
-  { href: "#stack", label: "Stack" },
+  { href: "#skills", label: "Skills" },
   { href: "#experience", label: "Experience" },
   { href: "#contact", label: "Contact" },
 ];
@@ -35,7 +35,7 @@ export function Nav() {
           <span className="grid h-7 w-7 place-items-center rounded-md bg-primary text-primary-foreground">
             ◆
           </span>
-          <span className="text-foreground">dev<span className="text-primary">.</span>folio</span>
+          <span className="text-foreground">moazzam<span className="text-primary">.</span>dev</span>
         </a>
         <nav className="hidden items-center gap-1 md:flex">
           {LINKS.map((l) => (

@@ -24,21 +24,24 @@ export function Hero() {
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] as const }}
-        className="text-balance text-center text-5xl font-bold leading-[1.05] tracking-tight md:text-7xl lg:text-8xl"
+        className="text-balance text-center text-5xl font-bold leading-[1.02] tracking-tight md:text-7xl lg:text-[5.5rem]"
       >
-        <span className="text-gradient">Full-stack engineer</span>
+        <span className="text-foreground">I build </span>
+        <span className="text-gradient">SaaS products</span>
         <br />
-        <span className="text-foreground">building the quiet&nbsp;parts.</span>
+        <span className="text-foreground">that turn </span>
+        <span className="italic text-primary">clicks into revenue.</span>
       </motion.h1>
 
       <motion.p
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.25 }}
-        className="mt-6 max-w-2xl text-balance text-center text-base leading-relaxed text-muted-foreground md:text-lg"
+        className="mt-7 max-w-2xl text-balance text-center text-base leading-relaxed text-muted-foreground md:text-lg"
       >
-        I design and ship resilient web systems — from pixel-perfect interfaces to the
-        databases, queues and edge functions humming underneath them.
+        Full-stack engineer obsessed with conversion-driven design, fast feedback loops and
+        resilient systems. I ship MVPs in weeks, scale them to thousands of users, and squeeze
+        every drop of performance from the stack underneath.
       </motion.p>
 
       <motion.div
