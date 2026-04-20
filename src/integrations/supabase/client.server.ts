@@ -11,7 +11,7 @@ function createSupabaseAdminClient() {
 
   if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
     throw new Error(
-      'Missing Supabase server environment variables. Ensure SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are set.'
+      "Missing Supabase server env: set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env (Dashboard → Settings → API → service_role secret). Restart dev server after editing."
     );
   }
 

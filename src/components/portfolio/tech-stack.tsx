@@ -7,7 +7,6 @@ const STACK = [
   "TanStack",
   "Node.js",
   "Go",
-  "Rust",
   "PostgreSQL",
   "Supabase",
   "Tailwind",

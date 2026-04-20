@@ -1,14 +1,16 @@
+import { randomUUID } from "node:crypto";
 import { createServerFn } from "@tanstack/react-start";
-import { supabase } from "@/integrations/supabase/client";
+import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { contactSchema } from "./contact-schema";
 
-const GATEWAY_URL = "https://connector-gateway.lovable.dev/resend";
+const RESEND_API_URL = "https://api.resend.com/emails";
 
 export const submitContact = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => contactSchema.parse(input))
   .handler(async ({ data }) => {
     // 1. Save to messages table
-    const { error: dbError } = await supabase.from("messages").insert({
+    const { error: dbError } = await supabaseAdmin.from("messages").insert({
+      id: randomUUID(),
       name: data.name,
       email: data.email,
       message: data.message,
@@ -19,27 +21,31 @@ export const submitContact = createServerFn({ method: "POST" })
       throw new Error("Could not save your message. Please try again.");
     }
 
-    // 2. Send email via Resend (gateway)
-    const LOVABLE_API_KEY = process.env.LOVABLE_API_KEY;
-    const RESEND_API_KEY = process.env.RESEND_API_KEY;
+    // 2. Notify you by email (Resend). Messages always land in Supabase `messages` above.
+    const RESEND_API_KEY = process.env.RESEND_API_KEY?.trim();
+    const contactTo = process.env.CONTACT_TO_EMAIL?.trim();
 
-    if (!LOVABLE_API_KEY || !RESEND_API_KEY) {
-      console.warn("Resend env vars missing — message saved but email skipped");
-      return { ok: true, emailed: false };
+    if (!RESEND_API_KEY || !contactTo) {
+      console.warn(
+        "Email skipped: set RESEND_API_KEY and CONTACT_TO_EMAIL in .env (message still saved in database)."
+      );
+      return { ok: true, emailed: false, emailError: "Missing RESEND_API_KEY or CONTACT_TO_EMAIL on server." };
     }
 
+    const from =
+      process.env.RESEND_FROM?.trim() || "Portfolio <onboarding@resend.dev>";
+
     try {
-      const res = await fetch(`${GATEWAY_URL}/emails`, {
+      const res = await fetch(RESEND_API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${LOVABLE_API_KEY}`,
-          "X-Connection-Api-Key": RESEND_API_KEY,
+          Authorization: `Bearer ${RESEND_API_KEY}`,
         },
         body: JSON.stringify({
-          from: "Portfolio <onboarding@resend.dev>",
-          to: ["delivered@resend.dev"],
-          reply_to: data.email,
+          from,
+          to: [contactTo],
+          reply_to: [data.email],
           subject: `New portfolio message from ${data.name}`,
           html: `
             <div style="font-family:system-ui,sans-serif;max-width:560px;margin:auto;padding:24px;background:#0f172a;color:#e2e8f0;border-radius:12px">
@@ -52,15 +58,27 @@ export const submitContact = createServerFn({ method: "POST" })
         }),
       });
 
+      const bodyText = await res.text();
+
       if (!res.ok) {
-        const body = await res.text();
-        console.error(`Resend error [${res.status}]:`, body);
-        return { ok: true, emailed: false };
+        let detail = bodyText;
+        try {
+          const parsed = JSON.parse(bodyText) as { message?: string };
+          if (parsed?.message) detail = parsed.message;
+        } catch {
+          /* keep raw body */
+        }
+        console.error(`Resend error [${res.status}]:`, bodyText);
+        return { ok: true, emailed: false, emailError: detail };
       }
       return { ok: true, emailed: true };
     } catch (err) {
       console.error("Resend request failed:", err);
-      return { ok: true, emailed: false };
+      return {
+        ok: true,
+        emailed: false,
+        emailError: err instanceof Error ? err.message : "Resend request failed",
+      };
     }
   });
 

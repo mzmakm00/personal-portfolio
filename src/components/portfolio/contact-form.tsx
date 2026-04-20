@@ -14,6 +14,7 @@ export function ContactForm() {
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [serverError, setServerError] = useState<string | null>(null);
+  const [emailNotice, setEmailNotice] = useState<string | null>(null);
 
   const validateField = (field: keyof typeof form, value: string) => {
     const result = contactSchema.shape[field].safeParse(value);
@@ -45,10 +46,18 @@ export function ContactForm() {
       return;
     }
     setStatus("submitting");
+    setEmailNotice(null);
     try {
-      await submit({ data: parsed.data });
+      const result = await submit({ data: parsed.data });
       setStatus("success");
       setForm({ name: "", email: "", message: "" });
+      if (result && typeof result === "object" && "emailed" in result && result.emailed === false) {
+        const err =
+          "emailError" in result && typeof result.emailError === "string"
+            ? result.emailError
+            : "Email notification was not sent.";
+        setEmailNotice(err);
+      }
     } catch (err) {
       console.error(err);
       setStatus("error");
@@ -70,8 +79,18 @@ export function ContactForm() {
             <CheckCircle2 className="h-12 w-12 text-primary" strokeWidth={1.5} />
             <h3 className="mt-4 text-2xl font-semibold text-foreground">Message received</h3>
             <p className="mt-2 text-sm text-muted-foreground">Thanks for reaching out — I'll reply within a day or two.</p>
+            {emailNotice && (
+              <p className="mt-4 max-w-md text-xs leading-relaxed text-amber-500/90">
+                Your message was saved. Email alert failed: {emailNotice}. See Resend → Logs; with{" "}
+                <span className="font-mono">onboarding@resend.dev</span> you can usually only notify the same address
+                as your Resend login until you verify a domain.
+              </p>
+            )}
             <button
-              onClick={() => setStatus("idle")}
+              onClick={() => {
+                setStatus("idle");
+                setEmailNotice(null);
+              }}
               className="mt-6 text-xs font-medium text-primary hover:underline"
             >
               Send another message
