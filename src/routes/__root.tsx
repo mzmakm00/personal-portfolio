@@ -29,16 +29,25 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Moazzam · Full-Stack Engineer building SaaS that converts" },
+      {
+        name: "description",
+        content:
+          "Moazzam — full-stack engineer shipping conversion-focused SaaS products with TypeScript, React, Go and Postgres.",
+      },
+      { name: "author", content: "Moazzam Akmal" },
+      { property: "og:title", content: "Moazzam · Full-Stack Engineer" },
+      {
+        property: "og:description",
+        content: "Selected work, skills and contact for a full-stack engineer building SaaS.",
+      },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { property: "og:image", content: "/moazzam-mark.svg" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "/moazzam-mark.svg" },
     ],
     links: [
+      { rel: "icon", type: "image/svg+xml", href: "/moazzam-mark.svg" },
       {
         rel: "stylesheet",
         href: appCss,

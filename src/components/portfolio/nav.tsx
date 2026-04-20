@@ -32,9 +32,11 @@ export function Nav() {
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <a href="#top" className="group inline-flex items-center gap-2 font-mono text-sm font-bold tracking-tight">
-          <span className="grid h-7 w-7 place-items-center rounded-md bg-primary text-primary-foreground">
-            ◆
-          </span>
+          <img
+            src="/moazzam-mark.svg"
+            alt="Moazzam logo"
+            className="h-7 w-7 rounded-md object-cover"
+          />
           <span className="text-foreground">moazzam<span className="text-primary">.</span>dev</span>
         </a>
         <nav className="hidden items-center gap-1 md:flex">
