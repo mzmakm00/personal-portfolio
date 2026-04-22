@@ -3,13 +3,5 @@
   "name": "portfolio",
   "compatibility_date": "2025-09-24",
   "compatibility_flags": ["nodejs_compat"],
-  "main": "@tanstack/react-start/server-entry",
-  "vars": {
-    "VITE_SUPABASE_URL": "",
-    "VITE_SUPABASE_PUBLISHABLE_KEY": "",
-    "SUPABASE_URL": "",
-    "SUPABASE_PUBLISHABLE_KEY": "",
-    "RESEND_API_KEY": "",
-    "SUPABASE_SERVICE_ROLE_KEY": ""
-  }
+  "main": "@tanstack/react-start/server-entry"
 }
